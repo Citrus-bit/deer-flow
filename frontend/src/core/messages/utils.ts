@@ -52,6 +52,10 @@ export function groupMessages<T>(
   }
 
   for (const message of messages) {
+    if (isHiddenFromUIMessage(message)) {
+      continue;
+    }
+
     if (message.name === "todo_reminder") {
       continue;
     }
@@ -342,6 +346,10 @@ export function findToolCallResult(toolCallId: string, messages: Message[]) {
     }
   }
   return undefined;
+}
+
+export function isHiddenFromUIMessage(message: Message) {
+  return message.additional_kwargs?.hide_from_ui === true;
 }
 
 /**
